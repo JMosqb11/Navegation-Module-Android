@@ -1,6 +1,7 @@
 package com.jhonier.bank.views
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,10 +20,16 @@ import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.jhonier.bank.components.MainButton
 import com.jhonier.bank.components.Space
@@ -30,7 +37,7 @@ import com.jhonier.bank.components.Space
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeView(navController: NavController){
+fun HomeView(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -54,24 +61,24 @@ fun HomeView(navController: NavController){
             )
         },
         bottomBar = {
-            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets){
+            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
                 NavigationBarItem(
                     onClick = {},
                     icon = { Icon(Icons.Filled.Home, contentDescription = "Perfil") },
                     selected = true,
-                    label = {Text(text = "Inicio")}
+                    label = { Text(text = "Inicio") },
                 )
                 NavigationBarItem(
                     onClick = {},
                     icon = { Icon(Icons.Filled.Favorite, contentDescription = "Perfil") },
                     selected = true,
-                    label = {Text(text = "Actividad")}
+                    label = { Text(text = "Actividad") }
                 )
                 NavigationBarItem(
                     onClick = {},
                     icon = { Icon(Icons.Filled.Place, contentDescription = "Perfil") },
                     selected = true,
-                    label = {Text(text = "Ubicación")}
+                    label = { Text(text = "Ubicación") }
                 )
                 NavigationBarItem(
                     onClick = {
@@ -79,7 +86,7 @@ fun HomeView(navController: NavController){
                     },
                     icon = { Icon(Icons.Filled.Person, contentDescription = "Perfil") },
                     selected = true,
-                    label = {Text(text = "Perfil")}
+                    label = { Text(text = "Perfil") }
                 )
             }
         }
@@ -89,7 +96,11 @@ fun HomeView(navController: NavController){
 }
 
 @Composable
-fun ContentHomeView(navController: NavController){
+fun ContentHomeView(navController: NavController) {
+
+    val id = 123
+    var opcional by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -97,10 +108,15 @@ fun ContentHomeView(navController: NavController){
     ) {
         Text(text = "Home")
         Space()
+        TextField(
+            value = opcional,
+            onValueChange = { opcional = it },
+            label = { Text(text = "datos") })
+        Space()
         MainButton(
             name = "Más"
         ) {
-            navController.navigate("Setting")
+            navController.navigate("Setting/${id}/?${opcional}")
         }
     }
 }
